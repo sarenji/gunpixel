@@ -2,4 +2,12 @@ h1. gunpixel
 
 Made for "node knockout":http://nodeknockout.com/, a 48-hour contest for "node.js":http://nodejs.org/!
 
-More coming later.
+This was made with node.js, using many libraries/frameworks:
+
+* express
+* socket.io
+* node-boilerplate
+
+If we had time, we'd use redis! And to fix the leaderboard, and to add individual rooms, team play, fog of war, and new types of weapons...
+
+But we had only 48 hours.
