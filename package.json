@@ -1,0 +1,17 @@
+{
+  "name": "gunpixel",
+  "version": "0.0.2",
+  "repository": {},
+  "directories": {
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    // your dependencies here, e.g. Express at the latest version:
+    "express": "*",
+    "socket.io": "*",
+    "ejs": "*"
+  }
+  // optionally, you can include an additional key "devDependencies" here
+}
