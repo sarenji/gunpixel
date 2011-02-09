@@ -1,12 +1,6 @@
-//setup Dependencies
-
-
-require(__dirname + "/lib/setup").ext(__dirname + "/lib").ext(__dirname + "/lib/express/support");
-var connect = require('connect')
-    , express = require('express')
+var express = require('express')
     , sys = require('sys')
-    , io = require('Socket.IO-node')
-    //,
+    , io = require('socket.io')
     , Bullet = require('./static/js/bullets').Bullet
     , Player = require('./static/js/players').Player
     //, Monsters  = require('./static/js/monsters')
@@ -16,12 +10,20 @@ var connect = require('connect')
 var server = express.createServer();
 server.configure(function(){
     server.set('views', __dirname + '/views');
-    server.use(connect.bodyDecoder());
-    server.use(connect.staticProvider(__dirname + '/static'));
+    server.use(express.bodyDecoder());
     server.use(server.router);
+    server.use(express.staticProvider(__dirname + '/static'));
 });
 
 //setup the errors
+function NotFound(msg) {
+    this.name = "NotFound";
+    Error.call(this, msg);
+    Error.captureStackTrace(this, arguments.callee);
+}
+
+sys.inherits(NotFound, Error);
+
 server.error(function(err, req, res, next){
     if (err instanceof NotFound) {
         res.render('404.ejs', { locals: { 
@@ -320,8 +322,8 @@ setInterval(function(){
     var update = generateUpdateMessage();
 
     var message = JSON.stringify(update);
-    var index = sock.clientsIndex;
-    for (c in index) {
+    var index = sock.clients;
+    for (var c in index) {
         var client = index[c];
         if (client) {
             //client.broadcast(message);
