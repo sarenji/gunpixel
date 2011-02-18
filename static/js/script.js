@@ -1,9 +1,5 @@
 $(function() {
-    io.setPath('/client/');
-    socket = new io.Socket(null, { 
-        port: 80,
-        transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling']
-    });
+    socket = new io.Socket();
     socket.connect();
     
     $('#sender').live('click', function() {

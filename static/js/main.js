@@ -221,14 +221,14 @@ function drawOtherCharacters() {
 }
 
 function drawBullets() {
-    for (b in gameState.bullets) {
+    for (var b in gameState.bullets) {
         
         gameState.bullets[b].draw(gameState.bullets[b].creator == curPlayer.ID);
     }
 }
 
 function drawMonsters() {
-    for (m in gameState.monsters) {
+    for (var m in gameState.monsters) {
         gameState.monsters[m].draw();
     }
 }
@@ -238,7 +238,7 @@ function shootBullet() {
 
     var d = utils.normalizeVect(gameState.mouseX - curPlayer.x*W, gameState.mouseY - curPlayer.y*W);
     
-    gameState.newState[ID] = {"ID":ID, "creator":curPlayer.ID, "type":"bullet", x:curPlayer.x*W, y:curPlayer.y*W, dx:d[0], dy:d[1] } ;
+    gameState.newState[ID] = {"ID":ID, "creator":curPlayer.ID, "type":"bullet", x:curPlayer.x*W + W/2, y:curPlayer.y*W + W/2, dx:d[0], dy:d[1] } ;
 }
 
 function updateLocal() {
@@ -390,7 +390,7 @@ function gameLoop() {
         } while (map[curPlayer.x][curPlayer.y] == "#");
     }
     //gameState.newState[curPlayer.ID] ;
-    getUpdatesFromServer();
+    //getUpdatesFromServer();
     updateLocal();
     draw();
 }

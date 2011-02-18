@@ -220,13 +220,12 @@ function dungen(width, height, minSize, maxSize, numRooms) {
 
 function updateServer(){
     for (var b in Bullet.all){
-        var cBul = Bullet.all[b];
-        cBul.update();
+        Bullet.all[b].update();
     }
 }
 
 function generateUpdateMessage(){
-    var update ={}
+    var update = {};
     update.tick =  ++ticks; 
 
     /*
@@ -234,13 +233,14 @@ function generateUpdateMessage(){
      */
     for (var b in Bullet.all){
         var cBul = Bullet.all[b];
-        update[cBul.ID]           = {};
-        update[cBul.ID].x         = cBul.x;
-        update[cBul.ID].y         = cBul.y;
-        update[cBul.ID].dx        = cBul.dx;
-        update[cBul.ID].dy        = cBul.dy;
-        update[cBul.ID].creator   = cBul.creator;
-        update[cBul.ID].type      = "bullet";
+        update[cBul.ID] = {
+            x : cBul.x,
+            y : cBul.y,
+            dx : cBul.dx,
+            dy : cBul.dy,
+            creator : cBul.creator,
+            type : "bullet"
+        };
     }
 
     /*
@@ -293,7 +293,7 @@ sock.on('connection', function(client) {
         //console.log(json + " received.");
 
         var update = JSON.parse(json);
-        for (ID in update){
+        for (var ID in update){
             updates[ID] = update[ID]; //Copy changes from this update to the big update.
         }
 	});
@@ -334,7 +334,7 @@ setInterval(function(){
     //console.log("received new info");
 
     //Updates - all updates received in the last 50ms
-    for (ID in updates){
+    for (var ID in updates){
         if (utils.isNumeric(ID)){ 
             var curUpdate = updates[ID];
             if (curUpdate.type == "bullet") { 
@@ -370,8 +370,8 @@ setInterval(function(){
     }
 
     //Remove laggy players
-    for (p in Player.all){
-        if (ticks - Player.all[p].lastUpdate>9 || Player.all[p].HP < -1){
+    for (var p in Player.all){
+        if (ticks - Player.all[p].lastUpdate>9 || Player.all[p].HP <= -1){
             Player.all[p].destroy();
         }
     }
